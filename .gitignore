@@ -33,21 +33,4 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
-.bowerrc
-LICENSE.md
-README.md
-Vagrantfile
-backend/
-codeception.yml
-common/
-composer.json
-composer.lock
-console/
-environments/
-frontend/
-init
-init.bat
-requirements.php
-vagrant/
-yii.bat
-mylog
+
