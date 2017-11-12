@@ -2,6 +2,7 @@
 
 namespace coommon\models;
 
+
 use Yii;
 
 /**
@@ -58,5 +59,13 @@ class Film extends \yii\db\ActiveRecord
             'film_seo_keywords' => 'Keywords',
             'film_seo_description' => 'Description',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(FilmImages::className(), ['film_id' => 'id']);
     }
 }

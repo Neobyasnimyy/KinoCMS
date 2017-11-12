@@ -11,7 +11,10 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    'language' => 'ru',
     'modules' => [],
+    'aliases' => [
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -45,8 +48,7 @@ return [
                 '' => 'site/index',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],
-        ],
-
+        ]
     ],
     'params' => $params,
 ];
