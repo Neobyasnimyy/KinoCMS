@@ -1,6 +1,6 @@
 <?php
 use dmstr\widgets\Menu;
-
+use yii\helpers\Url;
 ?>
 <aside class="main-sidebar">
 
@@ -36,34 +36,8 @@ use dmstr\widgets\Menu;
                 'items' => [
 //                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Фильмы', 'icon' => ' fa-film', 'url' => ['/debug']],
-                    ['label' => 'Новости', 'icon' => ' fa-newspaper-o', 'url' => ['/debug']],
+                    ['label' => 'Новости', 'icon' => ' fa-newspaper-o', 'url' => [Url::to(['article/index'])]],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
-                    [
-                        'label' => 'Same tools',
-                        'icon' => 'share',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
-                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
-                            [
-                                'label' => 'Level One',
-                                'icon' => 'circle-o',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
-                                    [
-                                        'label' => 'Level Two',
-                                        'icon' => 'circle-o',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
                 ],
             ]
         ) ?>

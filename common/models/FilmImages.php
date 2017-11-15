@@ -1,6 +1,6 @@
 <?php
 
-namespace coommon\models;
+namespace common\models;
 
 use Yii;
 
@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "film_images".
  *
  * @property integer $id
- * @property integer $film_id
+ * @property integer $parent_id
  * @property string $name
  */
 class FilmImages extends \yii\db\ActiveRecord
@@ -27,8 +27,8 @@ class FilmImages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['film_id', 'name'], 'required'],
-            [['film_id'], 'integer'],
+            [['parent_id', 'name'], 'required'],
+            [['parent_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -40,16 +40,8 @@ class FilmImages extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'film_id' => 'Film ID',
+            'parent_id' => 'Parent ID',
             'name' => 'Name',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getFilm()
-    {
-        return $this->hasOne(Film::className(), ['id' => 'film_id']);
     }
 }

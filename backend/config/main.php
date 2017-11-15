@@ -48,6 +48,17 @@ return [
                 '' => 'site/index',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],
+        ],
+        'urlManagerFrontend' => [
+            'class' => 'yii\web\UrlManager',
+            'baseUrl' => '',
+            'hostInfo' => 'http://kinocms.loc',
+            'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
+            'showScriptName' => false,
+        ],
+        'mycomponent' => [
+            'class' => 'backend\components\MyComponent'
         ]
     ],
     'params' => $params,
