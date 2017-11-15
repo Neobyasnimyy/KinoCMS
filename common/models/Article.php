@@ -87,7 +87,7 @@ class Article extends \yii\db\ActiveRecord
      */
     public function getImages()
     {
-        return $this->hasMany(ArticleImages::className(), ['article_id' => 'id']);
+        return $this->hasMany(ArticleImages::className(), ['parent_id' => 'id']);
     }
 
     /**

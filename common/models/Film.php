@@ -86,7 +86,7 @@ class Film extends \yii\db\ActiveRecord
      */
     public function getImages()
     {
-        return $this->hasMany(FilmImages::className(), ['film_id' => 'id']);
+        return $this->hasMany(FilmImages::className(), ['parent_id' => 'id']);
     }
 
     public function beforeDelete()

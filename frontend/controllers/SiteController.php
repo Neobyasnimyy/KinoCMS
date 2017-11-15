@@ -12,7 +12,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-
+use common\models\Film;
 /**
  * Site controller
  */
@@ -72,8 +72,41 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $today = date("Y-m-d");
+
+        $currentFilm = Film::find()->select(['id', 'film_image_name', 'film_name'])
+            ->where("film_data<='" . $today . "'")
+            ->orderBy(['film_data' => SORT_DESC])
+            ->limit(8)->asArray()->all();
+
+        $soonFilm = Film::find()->select(['id', 'film_image_name', 'film_name'])
+            ->where("film_data>'" . $today . "'")
+            ->orderBy(['film_data' => SORT_ASC])->limit(4)->asArray()->all();
+
+
+        return $this->render('index',[
+            'currentFilm'=>$currentFilm,
+            'soonFilm'=>$soonFilm,
+        ]);
     }
+
+
+    public function actionPoster(){
+        $today = date("Y-m-d");
+        $oldDay= date("Y-m-d",strtotime('-14 days'));
+
+        $currentFilm = Film::find()
+            ->select(['id', 'film_image_name', 'film_name','film_data'])
+            ->where("film_data<='" . $today . "' AND film_data>='".$oldDay."'")
+            ->orderBy(['film_data' => SORT_DESC])
+            ->limit(16)
+            ->asArray()->all();
+
+        return $this->render('poster',[
+            'currentFilm'=>$currentFilm,
+        ]);
+    }
+
 
     /**
      * Logs in a user.
@@ -131,15 +164,6 @@ class SiteController extends Controller
         }
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return mixed
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
 
     /**
      * Signs user up.
