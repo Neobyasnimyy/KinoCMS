@@ -157,7 +157,7 @@ class Article extends \yii\db\ActiveRecord
     }
 
 
-    // загружаем картинку во временную
+    // загружаем картинку во временную директорию
     public function uploadImage()
     {
         if ($this->validate()) {

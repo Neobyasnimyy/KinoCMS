@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model common\models\Article */
+/* @var $model common\models\Film */
 /* @var $form yii\widgets\ActiveForm */
 
 use yii\helpers\Html;
@@ -9,7 +9,7 @@ use kartik\date\DatePicker;
 use kartik\file\FileInput;
 
 $this->registerCssFile("/css/switcher.css");
-$this->registerCss('.gallery-images >div{ min-height: 120px;}');
+$this->registerCss('.gallery-images >div{ min-height: 120px; } .film-type div {display:inline}');
 $this->registerJsFile('/js/button-checkbox.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]);
 
@@ -34,64 +34,48 @@ $fieldConfig6 = [
 ];
 ?>
 
-<div class="article-form ">
+<div class="film-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="text-right">
-        <div id="toggles">
-            <input type="checkbox" name="checkbox1" id="checkbox1"
-                   class="ios-toggle" <?php echo ($model->isNewRecord or $model->article_is_active == 1) ? 'checked' : '' ?>/>
-            <label for="checkbox1" class="checkbox-label" data-off="ВЫКЛ" data-on="ВКЛ"></label>
-            <?php
-            echo $form->field($model, 'article_is_active')->checkbox()->label(false)->hiddenInput();
-            ?>
-        </div>
-    </div>
-
-
     <div class="row">
-        <div class="col-md-6">
-            <?php echo $form->field($model, 'article_title', $fieldConfig1)
-                ->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('article_title')]);
+        <div class="col-md-6 text-center">
+            <?php echo $form->field($model, 'film_name', $fieldConfig1)
+                ->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('film_name')]);
             ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 text-center">
             <?php
-            if (empty($model->article_data)) {
-                $model->article_data = date('Y-m-d');
+            if (empty($model->film_data)) {
+                $model->film_data = date('Y-m-d');
             }
-            echo $form->field($model, 'article_data', $fieldConfig1)->widget(DatePicker::className(), [
+            echo $form->field($model, 'film_data', $fieldConfig1)->widget(DatePicker::className(), [
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-//                'options' => ['placeholder' => 'Ввод даты ...'],
-                'value' => date("yyyy-mm-dd", (integer)$model->article_data),
+                'value' => date("yyyy-mm-dd", (integer)$model->film_data),
                 'removeButton' => false,
                 'pluginOptions' => [
                     'format' => 'yyyy-mm-dd',
                     'autoclose' => true,
                     'todayHighlight' => true,// подсвечивает сегодняшнюю дату
-//            'startView'=>2, // сначало выбираем год => 2
                     'weekStart' => 1, //неделя начинается с понедельника
-//            'startDate' => '01.05.2015 00:00', //самая ранняя возможная дата
                     'todayBtn' => 'linked', //снизу кнопка "сегодня"
                 ]
-
             ]);
             ?>
         </div>
     </div>
 
     <div class="row">
-        <?php echo $form->field($model, 'article_description', $fieldConfig3)->textarea(['rows' => 6, 'placeholder' => 'текст']) ?>
+        <?php echo $form->field($model, 'film_description', $fieldConfig3)->textarea(['rows' => 6, 'placeholder' => 'текст']) ?>
     </div>
 
     <div class="row">
         <div class="col-md-2 ">
-            <b><?php echo $model->getAttributeLabel('article_image_name') ?></b>
+            <b><?php echo $model->getAttributeLabel('film_image_name') ?></b>
         </div>
-        <?php if (isset($model->article_image_name) && file_exists(Yii::getAlias('@upImages') . "/article/{$model->id}/{$model->article_image_name}")): ?>
+        <?php if (isset($model->film_image_name) && file_exists(Yii::getAlias('@upImages') . "/film/{$model->id}/{$model->film_image_name}")): ?>
             <div class="col-md-2 col-xs-4">
-                <?php echo Html::img(Yii::getAlias('@getImages') . "/article/{$model->id}/{$model->article_image_name}", ['class' => 'img-responsive']); ?>
+                <?php echo Html::img(Yii::getAlias('@getImages') . "/film/{$model->id}/{$model->film_image_name}", ['class' => 'img-responsive']); ?>
                 <br>
             </div>
             <div class="col-md-2">
@@ -110,7 +94,6 @@ $fieldConfig6 = [
                     'language' => 'ru',
                     'options' => [
                         'accept' => 'image/*',
-//                    'required'=>$modelArticle->isNewRecord ? 'required' : false,
                     ],
                     'pluginOptions' => $pluginOptions
                 ])->label(false); ?>
@@ -124,7 +107,6 @@ $fieldConfig6 = [
             </div>
         <?php else: ?>
             <div class="col-md-4">
-                <!--            --><?php //echo $form->field($uploadImageArticle, 'image')->fileInput()->label(false) ?>
                 <?php $pluginOptions = [
                     'allowedFileExtensions' => ['jpg', 'gif', 'png', 'bmp'],
                     'overwriteInitial' => true, // перезаписывает данные которые мы ему передали при инициализации
@@ -141,7 +123,6 @@ $fieldConfig6 = [
                     'options' => [
                         'multiple' => true,
                         'accept' => 'image/*',
-//                    'required'=>$modelArticle->isNewRecord ? 'required' : false,
                     ],
                     'pluginOptions' => $pluginOptions
                 ])->label(false); ?>
@@ -168,7 +149,7 @@ $fieldConfig6 = [
                     'browseIcon' => '',
                 ];
 
-                echo $form->field($uploadGalleryImagesArticle, 'images[]')->widget(FileInput::classname(), [
+                echo $form->field($uploadGalleryImagesFilm, 'images[]')->widget(FileInput::classname(), [
                     'language' => 'ru',
                     'options' => [
                         'accept' => 'image/*',
@@ -178,13 +159,13 @@ $fieldConfig6 = [
                     'pluginOptions' => $pluginOptions
                 ])->label(false); ?>
             </div>
-            <?php if (!empty($modelArticleImages)): ?>
-                <?php foreach ($modelArticleImages as $image): ?>
+            <?php if (!empty($modelFilmImages)): ?>
+                <?php foreach ($modelFilmImages as $image): ?>
                     <div class="col-md-2 col-xs-4" >
-                        <?php echo Html::img(Yii::getAlias('@getImages') . "/article/{$image->parent_id}/{$image->name}", ['class' => 'img-responsive']); ?>
+                        <?php echo Html::img(Yii::getAlias('@getImages') . "/film/{$image->parent_id}/{$image->name}", ['class' => 'img-responsive']); ?>
                         <p><?php
                             echo $form->field($image, 'del', $fieldConfig6)
-                                ->input('checkbox', ['name'=>"ArticleImages[del][$image->id]",'class' => 'hidden', 'value' => true])
+                                ->input('checkbox', ['name'=>"FilmImages[del][$image->id]",'class' => 'hidden', 'value' => true])
                             ?></p>
                     </div>
                 <?php endforeach ?>
@@ -195,32 +176,49 @@ $fieldConfig6 = [
     </div>
 
     <div class="row">
-        <?php echo $form->field($model, 'article_video_url', $fieldConfig4)
+        <?php echo $form->field($model, 'film_url_trailer', $fieldConfig4)
             ->textInput(['maxlength' => true])
             ->input('text', ['placeholder' => "Сcылка на видео в youtube"])
         ?>
     </div>
 
     <br>
+
+    <div class="row">
+        <div class="col-md-2">
+            <b>Тип кино</b>
+        </div>
+        <div class="col-md-6 film-type">
+            <?php
+            echo $form->field($model, 'film_is_2d')
+                ->checkbox();
+            echo $form->field($model, 'film_is_3d')
+                ->checkbox();
+            echo $form->field($model, 'film_is_imax')
+                ->checkbox();
+            ?>
+        </div>
+    </div>
+    <br>
     <div class="row">
         <div class="col-md-2 ">
             <b>SEO Блок</b>
         </div>
         <div class="col-md-8">
-            <?php echo $form->field($model, 'article_seo_url', $fieldConfig5)
-                ->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('article_seo_url')]);
+            <?php echo $form->field($model, 'film_seo_url', $fieldConfig5)
+                ->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('film_seo_url')]);
             ?>
 
-            <?php echo $form->field($model, 'article_seo_title', $fieldConfig5)
-                ->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('article_seo_title')]);
+            <?php echo $form->field($model, 'film_seo_title', $fieldConfig5)
+                ->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('film_seo_title')]);
             ?>
 
-            <?php echo $form->field($model, 'article_seo_keywords', $fieldConfig5)
-                ->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('article_seo_keywords')]);
+            <?php echo $form->field($model, 'film_seo_keywords', $fieldConfig5)
+                ->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('film_seo_keywords')]);
             ?>
 
-            <?php echo $form->field($model, 'article_seo_description', $fieldConfig5)
-                ->textarea(['rows' => 6, 'placeholder' => $model->getAttributeLabel('article_seo_description')])
+            <?php echo $form->field($model, 'film_seo_description', $fieldConfig5)
+                ->textarea(['rows' => 6, 'placeholder' => $model->getAttributeLabel('film_seo_description')])
             ?>
         </div>
 
@@ -232,5 +230,6 @@ $fieldConfig6 = [
     </div>
 
     <?php ActiveForm::end(); ?>
+
 
 </div>

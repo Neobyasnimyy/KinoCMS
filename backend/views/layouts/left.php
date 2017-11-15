@@ -35,7 +35,7 @@ use yii\helpers\Url;
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
 //                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => 'Фильмы', 'icon' => ' fa-film', 'url' => ['/debug']],
+                    ['label' => 'Фильмы', 'icon' => ' fa-film', 'url' => [Url::to(['film/index'])]],
                     ['label' => 'Новости', 'icon' => ' fa-newspaper-o', 'url' => [Url::to(['article/index'])]],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                 ],

@@ -57,9 +57,6 @@ return [
             'enableStrictParsing' => true,
             'showScriptName' => false,
         ],
-        'mycomponent' => [
-            'class' => 'backend\components\MyComponent'
-        ]
     ],
     'params' => $params,
 ];
